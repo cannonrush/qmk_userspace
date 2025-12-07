@@ -4,26 +4,53 @@
 
 #include QMK_KEYBOARD_H
 
+#define HOME_N LCMD_T(KC_N)
+#define HOME_R LOPT_T(KC_R)
+#define HOME_T LCTL_T(KC_T)
+#define HOME_S LSFT_T(KC_S)
+
+#define HOME_H RCMD_T(KC_H)
+#define HOME_A RCTL_T(KC_A)
+#define HOME_E ROPT_T(KC_E)
+#define HOME_I RSFT_T(KC_I)
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_MINS,
-        CW_TOGG, KC_B,    KC_L,    KC_D,    KC_C,    KC_V,                         KC_J,    KC_Y,    KC_O,    KC_U,    KC_COMMA,KC_BSLS,
-        SFT_T(KC_BSPC),KC_N, KC_R, KC_T,    KC_S,    KC_G,                         KC_P,    KC_H,    KC_A,    KC_E,    KC_I,    RSFT_T(KC_QUOT),
-        KC_LGUI, ALT_T(KC_X),KC_Q, KC_M,    KC_W,    KC_Z,                         KC_K,    KC_F,    KC_QUOT, KC_SCLN, RALT_T(KC_DOT),KC_RCTL,
-                                LT(1,KC_TAB), CTL_T(KC_SPC),           SFT_T(KC_BSPC), LT(2,KC_ENT)
+        KC_ESC,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,
+        CW_TOGG,  KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_COMMA, KC_BSLS,
+        SFT_T(KC_BSPC), HOME_N, HOME_R, HOME_T, HOME_S,   KC_G,             KC_P,     HOME_H,   HOME_A,   HOME_E,   HOME_I,   RSFT_T(KC_QUOT),
+        KC_LGUI,  ALT_T(KC_X),KC_Q,   KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_QUOT,  KC_SCLN,  RALT_T(KC_DOT),KC_RCTL,
+                                                LT(1,KC_TAB), KC_SPC,       KC_BSPC,  LT(2,KC_ENT)
     ),
     [1] = LAYOUT(
-        KC_ESC,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-        KC_GRV,  KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                      KC_7,    KC_8,    KC_9,    KC_MINS, KC_SLSH, KC_F12,
-        _______, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN,                      KC_4,    KC_5,    KC_6,    KC_PLUS, KC_ASTR, KC_BSPC,
-        _______, _______, KC_LBRC, KC_RBRC, KC_LCBR, KC_RCBR,                      KC_1,    KC_2,    KC_3,    KC_DOT,  KC_EQL,  KC_ENT,
-                                                     _______, _______,    _______, KC_0
+        KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,            KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,
+        KC_GRV,   KC_EXLM,  KC_AT,    KC_HASH,  KC_DLR,   KC_PERC,          KC_7,     KC_8,     KC_9,     KC_MINS,  KC_SLSH,  KC_F12,
+        _______,  KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN,          KC_4,     KC_5,     KC_6,     KC_PLUS,  KC_ASTR,  KC_BSPC,
+        _______,  _______,  KC_LBRC,  KC_RBRC,  KC_LCBR,  KC_RCBR,          KC_1,     KC_2,     KC_3,     KC_DOT,   KC_EQL,   KC_ENT,
+                                                _______,  _______,          _______,  KC_0
     ),
     [2] = LAYOUT(
-        RM_TOGG, QK_KB,   RM_NEXT, RGB_M_P, RM_VALD, RM_VALU,                      _______, _______, _______, _______, _______, QK_BOOT,
-        _______, _______, KC_VOLD, KC_VOLU, KC_MUTE, _______,                      KC_PGUP, KC_HOME, KC_UP,   KC_END,  _______, _______,
-        _______, KC_MPRV, KC_MNXT, KC_MSTP, KC_MPLY, _______,                      KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______,
-        _______, _______, _______, _______, _______, _______,                      _______, C(S(KC_TAB)), C(KC_TAB), _______, _______, _______,
-                                                     _______, _______,    _______, _______
+        RM_TOGG,  QK_KB,    RM_NEXT,  RGB_M_P,  RM_VALD,  RM_VALU,          _______,  _______,  _______,  _______,  _______,  QK_BOOT,
+        _______,  _______,  KC_VOLD,  KC_VOLU,  KC_MUTE,  _______,          KC_PGUP,  KC_HOME,  KC_UP,    KC_END,   _______,  _______,
+        _______,  KC_MPRV,  KC_MNXT,  KC_MSTP,  KC_MPLY,  _______,          KC_PGDN,  KC_LEFT,  KC_DOWN,  KC_RGHT,  _______,  _______,
+        _______,  _______,  _______,  _______,  _______,  _______,          _______,  C(S(KC_TAB)),C(KC_TAB),_______,_______, _______,
+                                                _______,  _______,          _______,  _______
     ),
+    // [3] = LAYOUT(
+    //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
+    //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
+    //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
+    //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
+    //                                             _______,  _______,          _______,  _______
+    // ),
 };
+
+// https://docs.qmk.fm/tap_hold#chordal-hold-handedness
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
+    LAYOUT(
+          'L',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      'R',
+          'L',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      'R',
+          'L',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      'R',
+          'L',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      'R',
+                                                  '*',      '*',              '*',      '*'
+    );
