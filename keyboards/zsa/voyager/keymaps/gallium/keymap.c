@@ -4,21 +4,21 @@
 
 #include QMK_KEYBOARD_H
 
-#define HOME_N LCMD_T(KC_N)
-#define HOME_R LOPT_T(KC_R)
+#define HOME_N LALT_T(KC_N)
+#define HOME_R LGUI_T(KC_R)
 #define HOME_T LCTL_T(KC_T)
 #define HOME_S LSFT_T(KC_S)
 
-#define HOME_H RCMD_T(KC_H)
+#define HOME_H RSFT_T(KC_H)
 #define HOME_A RCTL_T(KC_A)
-#define HOME_E ROPT_T(KC_E)
-#define HOME_I RSFT_T(KC_I)
+#define HOME_E RGUI_T(KC_E)
+#define HOME_I RALT_T(KC_I)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
         KC_ESC,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_BSPC,
         CW_TOGG,  KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_COMMA, KC_BSLS,
-        SFT_T(KC_BSPC), KC_N, KC_R,   KC_T,     KC_S,     KC_G,             KC_P,     KC_H,     KC_A,     KC_E,     KC_I,     RSFT_T(KC_QUOT),
+        SFT_T(KC_BSPC), HOME_N, HOME_R, HOME_T, HOME_S,   KC_G,             KC_P,     HOME_H,   HOME_A,   HOME_E,   HOME_I,   RSFT_T(KC_QUOT),
         KC_LGUI,  ALT_T(KC_X),KC_Q,   KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_QUOT,  KC_SCLN,  RALT_T(KC_DOT),KC_RCTL,
                                                 LT(1,KC_TAB), KC_SPC,       KC_BSPC,  LT(2,KC_ENT)
     ),
