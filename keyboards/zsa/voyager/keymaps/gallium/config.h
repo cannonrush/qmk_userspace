@@ -1,7 +1,8 @@
 #pragma once
 
-// https://docs.qmk.fm/tap_hold#flow-tap
-#define TAPPING_TERM 300
+// https://docs.qmk.fm/tap_hold#tapping-term
+#define TAPPING_TERM 200
+// #define TAPPING_TERM_PER_KEY
 
 // https://docs.qmk.fm/tap_hold#quick-tap-term
 // Remove auto-repeat from dual-role keys to support quick successive tap -> hold actions
@@ -10,11 +11,16 @@
 // https://docs.qmk.fm/tap_hold#permissive-hold
 #define PERMISSIVE_HOLD
 
-// https://docs.qmk.fm/tap_hold#permissive-hold
+// https://docs.qmk.fm/tap_hold#chordal-hold
 #define CHORDAL_HOLD
 
 // https://docs.qmk.fm/tap_hold#flow-tap
 // #define FLOW_TAP_TERM 150
+
+// https://docs.qmk.fm/features/combo
+// #define COMBO_ONLY_FROM_LAYER 0
+// #define COMBO_TERM 20
+// #define COMBO_STRICT_TIMER
 
 // https://docs.qmk.fm/features/rgb_matrix
 // First, disable all animations configured by keyboard.json

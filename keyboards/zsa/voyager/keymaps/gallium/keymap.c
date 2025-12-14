@@ -4,22 +4,30 @@
 
 #include QMK_KEYBOARD_H
 
-#define HOME_N LALT_T(KC_N)
-#define HOME_R LGUI_T(KC_R)
-#define HOME_T LCTL_T(KC_T)
-#define HOME_S LSFT_T(KC_S)
+// #define HOME_N LALT_T(KC_N)
+// #define HOME_R LGUI_T(KC_R)
+// #define HOME_T LCTL_T(KC_T)
+// #define HOME_S LSFT_T(KC_S)
+// #define HOME_H RSFT_T(KC_H)
+// #define HOME_A RCTL_T(KC_A)
+// #define HOME_E RGUI_T(KC_E)
+// #define HOME_I RALT_T(KC_I)
 
-#define HOME_H RSFT_T(KC_H)
-#define HOME_A RCTL_T(KC_A)
-#define HOME_E RGUI_T(KC_E)
+#define HOME_N LALT_T(KC_N)
+#define HOME_R LALT_T(KC_R)
+#define HOME_T LSFT_T(KC_T)
+#define HOME_S LALT_T(KC_S)
+#define HOME_H RALT_T(KC_H)
+#define HOME_A RSFT_T(KC_A)
+#define HOME_E RALT_T(KC_E)
 #define HOME_I RALT_T(KC_I)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
         KC_ESC,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_BSPC,
-        CW_TOGG,  KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_COMMA, KC_BSLS,
-        SFT_T(KC_BSPC), HOME_N, HOME_R, HOME_T, HOME_S,   KC_G,             KC_P,     HOME_H,   HOME_A,   HOME_E,   HOME_I,   RSFT_T(KC_QUOT),
-        KC_LGUI,  ALT_T(KC_X),KC_Q,   KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_QUOT,  KC_SCLN,  RALT_T(KC_DOT),KC_RCTL,
+        CW_TOGG,  KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_COMMA, KC_BSPC,
+        OS_LSFT,  HOME_N,   HOME_R,   HOME_T,   HOME_S,   KC_G,             KC_P,     HOME_H,   HOME_A,   HOME_E,   HOME_I,   OS_RSFT,
+        TG(4),    KC_X,     KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_QUOT,  KC_SCLN,  KC_DOT,   KC_BSPC,
                                                 LT(1,KC_TAB), KC_SPC,       KC_BSPC,  LT(2,KC_ENT)
     ),
     [1] = LAYOUT(
@@ -36,7 +44,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  _______,  _______,  _______,  RM_HUED,  RM_HUEU,          _______,  C(S(KC_TAB)),C(KC_TAB),_______,_______, _______,
                                                 _______,  _______,          _______,  _______
     ),
-    // [3] = LAYOUT(
+    [4] = LAYOUT(
+        _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
+        _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
+        _______,  KC_N,     KC_R,     KC_T,     KC_S,     _______,          _______,  KC_H,     KC_A,     KC_E,     KC_I,     _______,
+        _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
+                                                _______,  _______,          _______,  _______
+    ),
+    // [9] = LAYOUT(
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
@@ -54,3 +69,23 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
           'L',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      'R',
                                                   '*',      '*',              '*',      '*'
     );
+
+// https://docs.qmk.fm/tap_hold#tapping-term
+// uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+//     switch (keycode) {
+//         case HOME_T:
+//         case HOME_A:
+//             return TAPPING_TERM;
+//         default:
+//             return TAPPING_TERM;
+//     }
+// }
+
+// https://docs.qmk.fm/features/combo
+// const uint16_t PROGMEM ou_combo[] = {KC_O, KC_U, COMBO_END};
+// const uint16_t PROGMEM yo_combo[] = {KC_Y, KC_O, COMBO_END};
+// combo_t key_combos[] = {
+//     COMBO(ou_combo, KC_BSPC),
+//     COMBO(yo_combo, KC_BSPC),
+// };
+
