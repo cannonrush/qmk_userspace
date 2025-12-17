@@ -1,17 +1,4 @@
-// Copyright 2023 ZSA Technology Labs, Inc <@zsa>
-// Copyright 2023 Christopher Courtney, aka Drashna Jael're  (@drashna) <drashna@live.com>
-// SPDX-License-Identifier: GPL-2.0-or-later
-
 #include QMK_KEYBOARD_H
-
-// #define HOME_N LALT_T(KC_N)
-// #define HOME_R LGUI_T(KC_R)
-// #define HOME_T LCTL_T(KC_T)
-// #define HOME_S LSFT_T(KC_S)
-// #define HOME_H RSFT_T(KC_H)
-// #define HOME_A RCTL_T(KC_A)
-// #define HOME_E RGUI_T(KC_E)
-// #define HOME_I RALT_T(KC_I)
 
 #define HOME_N LALT_T(KC_N)
 #define HOME_R LALT_T(KC_R)
@@ -47,10 +34,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [4] = LAYOUT(
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
-        _______,  KC_N,     KC_R,     KC_T,     KC_S,     _______,          _______,  KC_H,     KC_A,     KC_E,     KC_I,     _______,
+        _______,  KC_N,     KC_R,     HOME_T,   KC_S,     _______,          _______,  KC_H,     HOME_A,   KC_E,     KC_I,     _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
                                                 _______,  _______,          _______,  _______
     ),
+    // [0] = LAYOUT(
+    //     _______,  KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     _______,
+    //     _______,  KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     _______,  _______,
+    //     _______,  HOME_N,   HOME_R,   HOME_T,   HOME_S,   KC_G,             KC_P,     HOME_H,   HOME_A,   HOME_E,   HOME_I,   _______,
+    //     _______,  KC_X,     KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     _______,  _______,  _______,  _______,
+    //                                             MO(1),    KC_SPC,           KC_BSPC,  MO(2)
+    // ),
     // [9] = LAYOUT(
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
@@ -69,6 +63,51 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
           'L',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      'R',
                                                   '*',      '*',              '*',      '*'
     );
+
+static uint16_t key_press_keycode = KC_NO;
+
+// https://docs.qmk.fm/understanding_qmk
+bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        key_press_keycode = keycode;
+    }
+    return true;
+}
+
+// https://docs.qmk.fm/tap_hold#hold-on-other-key-press
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case HOME_N:
+        case HOME_R:
+        case HOME_S:
+        case HOME_H:
+        case HOME_E:
+        case HOME_I:
+            // For snappier word and line deletion, resolve relevant modifiers
+            // to "hold" immediately when backspace is pressed
+            return key_press_keycode == KC_BSPC;
+        default:
+            return false;
+    }
+}
+
+// https://docs.qmk.fm/tap_hold#is-flow-tap-key
+bool is_flow_tap_key(uint16_t keycode) {
+    if ((get_mods() & (MOD_MASK_CG | MOD_BIT_LALT)) != 0) {
+        return false; // Disable Flow Tap on hotkeys
+    }
+    switch (get_tap_keycode(keycode)) {
+        case KC_SPC:
+        case KC_B ... KC_S: // Exclude LSFT ("A")
+        case KC_U ... KC_Z: // Exclude RSFT ("T")
+        case KC_DOT:
+        case KC_COMM:
+        case KC_SCLN:
+        case KC_SLSH:
+            return true;
+    }
+    return false;
+}
 
 // https://docs.qmk.fm/tap_hold#tapping-term
 // uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {

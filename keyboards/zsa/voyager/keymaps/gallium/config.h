@@ -8,14 +8,18 @@
 // Remove auto-repeat from dual-role keys to support quick successive tap -> hold actions
 #define QUICK_TAP_TERM 0
 
+// https://docs.qmk.fm/tap_hold#flow-tap
+#define FLOW_TAP_TERM 50
+
 // https://docs.qmk.fm/tap_hold#permissive-hold
 #define PERMISSIVE_HOLD
 
 // https://docs.qmk.fm/tap_hold#chordal-hold
 #define CHORDAL_HOLD
 
-// https://docs.qmk.fm/tap_hold#flow-tap
-// #define FLOW_TAP_TERM 150
+// https://docs.qmk.fm/tap_hold#hold-on-other-key-press
+// Enabled to support early resolution of CTL, GUI and ALT when followed by BSPC
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
 // https://docs.qmk.fm/features/combo
 // #define COMBO_ONLY_FROM_LAYER 0
