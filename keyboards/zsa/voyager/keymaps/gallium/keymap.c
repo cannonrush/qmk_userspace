@@ -1,21 +1,21 @@
 #include QMK_KEYBOARD_H
 
-#define HOME_N LALT_T(KC_N)
-#define HOME_R LALT_T(KC_R)
-#define HOME_T LSFT_T(KC_T)
-#define HOME_S LALT_T(KC_S)
-#define HOME_H RALT_T(KC_H)
-#define HOME_A RSFT_T(KC_A)
-#define HOME_E RALT_T(KC_E)
-#define HOME_I RALT_T(KC_I)
+#define HR_N LALT_T(KC_N)
+#define HR_R LALT_T(KC_R)
+#define HR_T LSFT_T(KC_T)
+#define HR_S LALT_T(KC_S)
+#define HR_H RALT_T(KC_H)
+#define HR_A RSFT_T(KC_A)
+#define HR_E RALT_T(KC_E)
+#define HR_I RALT_T(KC_I)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        KC_ESC,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_BSPC,
-        CW_TOGG,  KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_COMMA, KC_BSPC,
-        OS_LSFT,  HOME_N,   HOME_R,   HOME_T,   HOME_S,   KC_G,             KC_P,     HOME_H,   HOME_A,   HOME_E,   HOME_I,   OS_RSFT,
-        TG(4),    KC_X,     KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_QUOT,  KC_SCLN,  KC_DOT,   KC_BSPC,
-                                                LT(1,KC_TAB), KC_SPC,       KC_BSPC,  LT(2,KC_ENT)
+        KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,
+        KC_TAB,   KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_QUOT,  KC_EQL,
+        KC_TAB,   HR_N,     HR_R,     HR_T,     HR_S,     KC_G,             KC_P,     HR_H,     HR_A,     HR_E,     HR_I,     KC_ENT,
+        OS_LSFT,  KC_X,     KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_COMM,  KC_DOT,   KC_SLSH,  OS_RSFT,
+                                                MO(1),    KC_SPC,           KC_BSPC,  MO(2)
     ),
     [1] = LAYOUT(
         KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,            KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,
@@ -34,16 +34,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [4] = LAYOUT(
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
-        _______,  KC_N,     KC_R,     HOME_T,   KC_S,     _______,          _______,  KC_H,     HOME_A,   KC_E,     KC_I,     _______,
+        _______,  KC_N,     KC_R,     HR_T,   KC_S,     _______,          _______,  KC_H,     HR_A,   KC_E,     KC_I,     _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
                                                 _______,  _______,          _______,  _______
     ),
     // [0] = LAYOUT(
-    //     _______,  KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     _______,
-    //     _______,  KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     _______,  _______,
-    //     _______,  HOME_N,   HOME_R,   HOME_T,   HOME_S,   KC_G,             KC_P,     HOME_H,   HOME_A,   HOME_E,   HOME_I,   _______,
-    //     _______,  KC_X,     KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     _______,  _______,  _______,  _______,
-    //                                             MO(1),    KC_SPC,           KC_BSPC,  MO(2)
+    //     KC_GRV,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MINS,
+    //     KC_TAB,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_QUOT,  KC_EQL,
+    //     KC_ESC,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_ENT,
+    //     OS_LSFT,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  KC_COMM,  KC_DOT,   KC_SLSH,  OS_RSFT,
+    //                                             XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX
+    // ),
+    // [0] = LAYOUT(
+    //     _______,  KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,
+    //     _______,  KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     _______,  KC_EQL,
+    //     _______,  HR_N,   HR_R,   HR_T,   HR_S,   KC_G,             KC_P,     HR_H,   HR_A,   HR_E,   HR_I,   KC_ENT,
+    //     _______,  KC_X,     KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_COMM,  KC_DOT,   KC_SLSH,  _______,
+    //                                             MO(_NAV), KC_SPC,           KC_BSPC,  MO(_SYM)
     // ),
     // [9] = LAYOUT(
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
@@ -77,12 +84,12 @@ bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
 // https://docs.qmk.fm/tap_hold#hold-on-other-key-press
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case HOME_N:
-        case HOME_R:
-        case HOME_S:
-        case HOME_H:
-        case HOME_E:
-        case HOME_I:
+        case HR_N:
+        case HR_R:
+        case HR_S:
+        case HR_H:
+        case HR_E:
+        case HR_I:
             // For snappier word and line deletion, resolve relevant modifiers
             // to "hold" immediately when backspace is pressed
             return key_press_keycode == KC_BSPC;
@@ -112,8 +119,8 @@ bool is_flow_tap_key(uint16_t keycode) {
 // https://docs.qmk.fm/tap_hold#tapping-term
 // uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 //     switch (keycode) {
-//         case HOME_T:
-//         case HOME_A:
+//         case HR_T:
+//         case HR_A:
 //             return TAPPING_TERM;
 //         default:
 //             return TAPPING_TERM;

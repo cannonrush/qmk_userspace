@@ -21,6 +21,9 @@
 // Enabled to support early resolution of CTL, GUI and ALT when followed by BSPC
 #define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
 
+// https://docs.qmk.fm/features/caps_word#how-do-i-enable-caps-word
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+
 // https://docs.qmk.fm/features/combo
 // #define COMBO_ONLY_FROM_LAYER 0
 // #define COMBO_TERM 20
