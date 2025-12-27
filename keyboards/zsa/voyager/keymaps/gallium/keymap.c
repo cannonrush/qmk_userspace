@@ -1,23 +1,35 @@
 #include QMK_KEYBOARD_H
 
-#define MOD_MASK_LCAG (MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LGUI))
+enum layers {
+    LAYER_BASE,
+    LAYER_NAV,
+    LAYER_SYM,
+    LAYER_FNC,
+};
 
 #define MT_R LGUI_T(KC_R)
 #define MT_T LSFT_T(KC_T)
 #define MT_S LCTL_T(KC_S)
+#define MT_SPC LALT_T(KC_SPC)
+
+#define MT_BSPC RALT_T(KC_BSPC)
 #define MT_H RCTL_T(KC_H)
 #define MT_A RSFT_T(KC_A)
 #define MT_E RGUI_T(KC_E)
-#define MT_SPC LALT_T(KC_SPC)
-#define MT_BSPC RALT_T(KC_BSPC)
+
+#define LT_X LT(LAYER_FNC, KC_X)
+#define MO_NAV MO(LAYER_NAV)
+#define MO_SYM MO(LAYER_SYM)
+
+#define MOD_MASK_LCAG (MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LGUI))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT(
+    [LAYER_BASE] = LAYOUT(
         KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,
         KC_TAB,   KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_QUOT,  KC_EQL,
         KC_ESC,   KC_N,     MT_R,     MT_T,     MT_S,     KC_G,             KC_P,     MT_H,     MT_A,     MT_E,     KC_I,     KC_ENT,
-        OS_LSFT,  KC_X,     KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_COMM,  KC_DOT,   KC_SLSH,  KC_BSPC, // OS_RSFT,
-                                                MO(1),    MT_SPC,           MT_BSPC,  MO(2)
+        OS_LSFT,  LT_X,     KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_COMM,  KC_DOT,   KC_SLSH,  OS_RSFT,
+                                                MO_NAV,   MT_SPC,           MT_BSPC,  MO_SYM
     ),
     // [1] = LAYOUT(
     //     KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,            KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,
@@ -33,18 +45,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     //     _______,  _______,  _______,  _______,  RM_HUED,  RM_HUEU,          _______,  C(S(KC_TAB)),C(KC_TAB),_______,_______, _______,
     //                                             _______,  _______,          _______,  _______
     // ),
-    [1] = LAYOUT(
+    [LAYER_NAV] = LAYOUT(
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
         _______,  KC_LALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  _______,          KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT, _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
                                                 _______,  _______,          _______,  _______
     ),
-    [2] = LAYOUT(
+    [LAYER_SYM] = LAYOUT(
         KC_TILD,  KC_EXLM,  KC_AT,    KC_HASH,  KC_DLR,   KC_PERC,          KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN,  KC_UNDS,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  KC_DQT,   KC_PLUS,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  KC_RCTL,  KC_RSFT,  KC_RGUI,  KC_RALT,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  KC_LABK,  KC_RABK,  KC_QUES,  _______,
+                                                _______,  _______,          _______,  _______
+    ),
+    [LAYER_FNC] = LAYOUT(
+        _______,  _______,  _______,  _______,  _______,  _______,          _______,  KC_F1,    KC_F2,    KC_F3,    _______,  _______,
+        _______,  _______,  _______,  _______,  _______,  _______,          _______,  KC_F4,    KC_F5,    KC_F6,    _______,  _______,
+        _______,  _______,  KC_LGUI,  KC_LSFT,  KC_LCTL,  _______,          _______,  KC_F7,    KC_F8,    KC_F9,    _______,  _______,
+        _______,  _______,  _______,  _______,  _______,  _______,          _______,  KC_F10,   KC_F11,   KC_F12,   _______,  _______,
                                                 _______,  _______,          _______,  _______
     ),
 
