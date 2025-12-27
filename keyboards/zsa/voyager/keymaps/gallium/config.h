@@ -1,36 +1,24 @@
 #pragma once
 
-// https://docs.qmk.fm/tap_hold#tapping-term
-#define TAPPING_TERM 200
-// #define TAPPING_TERM_PER_KEY
+#define TAPPING_TERM 200 // https://docs.qmk.fm/tap_hold#tapping-term
+#define PERMISSIVE_HOLD  // https://docs.qmk.fm/tap_hold#permissive-hold
+#define CHORDAL_HOLD     // https://docs.qmk.fm/tap_hold#chordal-hold
+#define FLOW_TAP_TERM 50 // https://docs.qmk.fm/tap_hold#flow-tap
 
+// "0" value removes auto-repeat from dual-role keys, which is
+// necessary to support quick successive tap -> hold actions
 // https://docs.qmk.fm/tap_hold#quick-tap-term
-// Remove auto-repeat from dual-role keys to support quick successive tap -> hold actions
 #define QUICK_TAP_TERM 0
 
-// https://docs.qmk.fm/tap_hold#flow-tap
-#define FLOW_TAP_TERM 50
-
-// https://docs.qmk.fm/tap_hold#permissive-hold
-#define PERMISSIVE_HOLD
-
-// https://docs.qmk.fm/tap_hold#chordal-hold
-#define CHORDAL_HOLD
-
-// https://docs.qmk.fm/tap_hold#hold-on-other-key-press
 // Enabled to support early resolution of CTL, GUI and ALT when followed by BSPC
-#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY
+#define HOLD_ON_OTHER_KEY_PRESS_PER_KEY // https://docs.qmk.fm/tap_hold#hold-on-other-key-press
+#define TAPPING_TERM_PER_KEY            // https://docs.qmk.fm/tap_hold#tapping-term
 
 // https://docs.qmk.fm/features/caps_word#how-do-i-enable-caps-word
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
-// https://docs.qmk.fm/features/combo
-// #define COMBO_ONLY_FROM_LAYER 0
-// #define COMBO_TERM 20
-// #define COMBO_STRICT_TIMER
-
-// https://docs.qmk.fm/features/rgb_matrix
 // First, disable all animations configured by keyboard.json
+// https://docs.qmk.fm/features/rgb_matrix
 #undef ENABLE_RGB_MATRIX_ALPHAS_MODS
 #undef ENABLE_RGB_MATRIX_GRADIENT_UP_DOWN
 #undef ENABLE_RGB_MATRIX_GRADIENT_LEFT_RIGHT
@@ -80,7 +68,8 @@
 #undef ENABLE_RGB_MATRIX_MULTISPLASH
 #undef ENABLE_RGB_MATRIX_SOLID_SPLASH
 #undef ENABLE_RGB_MATRIX_SOLID_MULTISPLASH
-// Then, enable only we want to keep
+
+// Then, enable only the ones we want to keep
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_SIMPLE
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTIWIDE
 #define ENABLE_RGB_MATRIX_SOLID_REACTIVE_MULTICROSS
