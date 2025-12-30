@@ -1,4 +1,24 @@
 #include QMK_KEYBOARD_H
+#include "one-shot-double-tap.c" // Include support for one-shot mod double-taps
+
+/**
+ * Do next:
+ * TOOD: symbols layer (!)
+ * TODO: add Home, End, Page Down and Page Up to the NAV layer
+ *
+ * Do later:
+ * TODO: consider putting layer keys on the primary thumb buttons
+ * TODO: figure out how to do key repeat for R, T, S, H, A, E and X
+ * TODO: consider making secondary thumb buttons (or one of them) into leader keys
+ * TODO: consider https://docs.qmk.fm/features/dynamic_macros (better to do this at the OS level?)
+ * TODO: change start-up LED sequence, making the right half light up first (no way to override at
+ *       user level, but we can modify the core repo and submit a PR)
+ *
+ * Thumb Shift:
+ * - Doesn't work bilaterally, as it leads to "Space Shift" bigram on the left
+ * - Can be placed on the primary right button, but this results in some awkward
+ *   right-hand bigrams; still, could be worth it for fast typing
+ */
 
 enum layers {
     LAYER_BASE,
@@ -33,30 +53,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                                 LT_NAV,   MT_SPC,           MT_BSPC,  LT_SYM
     ),
     // [1] = LAYOUT(
-    //     KC_ESC,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,            KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,
-    //     KC_GRV,   KC_EXLM,  KC_AT,    KC_HASH,  KC_DLR,   KC_PERC,          KC_7,     KC_8,     KC_9,     KC_MINS,  KC_SLSH,  KC_F12,
-    //     _______,  KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN,          KC_4,     KC_5,     KC_6,     KC_PLUS,  KC_ASTR,  KC_BSPC,
-    //     _______,  _______,  KC_LBRC,  KC_RBRC,  KC_LCBR,  KC_RCBR,          KC_1,     KC_2,     KC_3,     KC_DOT,   KC_EQL,   KC_ENT,
-    //                                             _______,  _______,          _______,  KC_0
+    //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
+    //     _______,  KC_EXLM,  KC_AT,    KC_HASH,  KC_DLR,   KC_PERC,          _______,  _______,  _______,  KC_MINS,  KC_SLSH,  _______,
+    //     _______,  KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN,          _______,  _______,  _______,  KC_PLUS,  KC_ASTR,  _______,
+    //     _______,  _______,  KC_LBRC,  KC_RBRC,  KC_LCBR,  KC_RCBR,          _______,  _______,  _______,  KC_DOT,   KC_EQL,   _______,
+    //                                             _______,  _______,          _______,  _______,
     // ),
     // [2] = LAYOUT(
     //     RM_TOGG,  QK_KB,    RM_NEXT,  RGB_M_P,  RM_VALD,  RM_VALU,          _______,  _______,  _______,  _______,  _______,  QK_BOOT,
-    //     _______,  _______,  _______,  _______,  _______,  _______,          KC_PGUP,  KC_HOME,  KC_UP,    KC_END,   _______,  _______,
-    //     _______,  _______,  _______,  KC_MSTP,  _______,  _______,          KC_PGDN,  KC_LEFT,  KC_DOWN,  KC_RGHT,  _______,  _______,
+    //     _______,  _______,  _______,  _______,  _______,  _______,          KC_PGUP,  KC_HOME,  _______,  KC_END,   _______,  _______,
+    //     _______,  _______,  _______,  KC_MSTP,  _______,  _______,          KC_PGDN,  _______,  _______,  _______,  _______,  _______,
     //     _______,  _______,  _______,  _______,  RM_HUED,  RM_HUEU,          _______,  C(S(KC_TAB)),C(KC_TAB),_______,_______, _______,
     //                                             _______,  _______,          _______,  _______
     // ),
     [LAYER_SYM] = LAYOUT(
         KC_TILD,  KC_EXLM,  KC_AT,    KC_HASH,  KC_DLR,   KC_PERC,          KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN,  KC_UNDS,
-        _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  KC_DQT,   KC_PLUS,
-        _______,  _______,  _______,  _______,  _______,  _______,          _______,  KC_RCTL,  KC_RSFT,  KC_RGUI,  KC_RALT,  _______,
+        _______,  _______,  KC_LCBR,  KC_RCBR,  _______,  _______,          _______,  _______,  _______,  _______,  KC_DQT,   KC_PLUS,
+        _______,  _______,  _______,  _______,  _______,  _______,          _______,  OS_RCTL,  OS_RSFT,  OS_RGUI,  OS_RALT,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  KC_LABK,  KC_RABK,  KC_QUES,  _______,
                                                 _______,  _______,          _______,  XXXXXXX
     ),
     [LAYER_NAV] = LAYOUT(
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
-        _______,  KC_LALT,  KC_LGUI,  KC_LSFT,  KC_LCTL,  _______,          KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,
+        _______,  OS_LALT,  OS_LGUI,  OS_LSFT,  OS_LCTL,  _______,          KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
                                                 XXXXXXX,  _______,          KC_SPC,   _______
     ),
@@ -65,32 +85,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  _______,  _______,  _______,  _______,  _______,          RM_HUEU,  KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_VOLU,
         _______,  _______,  KC_LGUI,  KC_LSFT,  KC_LCTL,  _______,          RM_SATU,  KC_F5,    KC_F6,    KC_F7,    KC_F8,    _______,
         _______,  XXXXXXX,  _______,  _______,  _______,  _______,          RM_VALU,  KC_F9,    KC_F10,   KC_F11,   KC_F12,   RM_TOGG,
-                                                _______,  _______,          KC_DEL,   _______
+                                                KC_LALT,  _______,          KC_DEL,   _______
     ),
 
     // [] {} | \ : ; ()
     //
-    // -> => <= != (); += ~/ ~/. ```
+    // -> => <= != (); += -= ~/ ~/. ``` :% := ;.
     //
+    // []  | \ (yo?)
+    // -> => <= != (); += -= ~/ ~/. ``` :% := ;,
     //
-    // - - - - -   - - - - -
+    // - ( ) : -   - - - - "
+    // - { } ; -   - C S G A
+    // - - - - -   - - < > ?
+    //
+    // [] {} | \ : ; ()
+    // -> => <= != (); += -= ~/ ~/. ``` :% :=
+    //
+    // - - - - -   - - - - X
     // - - - - -   - X X X X
     // - - - - -   - - X X X
     //
-    // [0] = LAYOUT(
-    //     KC_GRV,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_MINS,
-    //     KC_TAB,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_QUOT,  KC_EQL,
-    //     KC_ESC,   XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  KC_ENT,
-    //     OS_LSFT,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX,  KC_COMM,  KC_DOT,   KC_SLSH,  OS_RSFT,
-    //                                             XXXXXXX,  XXXXXXX,          XXXXXXX,  XXXXXXX
-    // ),
-    // [0] = LAYOUT(
-    //     _______,  KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,
-    //     _______,  KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     _______,  KC_EQL,
-    //     _______,  MT_N,   MT_R,   MT_T,   MT_S,   KC_G,             KC_P,     MT_H,   MT_A,   MT_E,   MT_I,   KC_ENT,
-    //     _______,  KC_X,     KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_COMM,  KC_DOT,   KC_SLSH,  _______,
-    //                                             MO(_NAV), KC_SPC,           KC_BSPC,  MO(_SYM)
-    // ),
     // [9] = layout(
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
@@ -178,6 +193,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 return false;
             }
+            return true;
+        case OS_LCTL ... OS_RGUI:
+            // Support double-tapping one-shot mods, to produce a mod double-tap
+            return process_oneshot_or_double_tap(keycode, record);
         default:
             return true;
     }
@@ -200,7 +219,6 @@ bool is_flow_tap_key(uint16_t keycode) {
         case KC_MINS:
         case KC_EQL:
         case KC_SPC:
-        case KC_BSPC:
             return true;
     }
     return false;
