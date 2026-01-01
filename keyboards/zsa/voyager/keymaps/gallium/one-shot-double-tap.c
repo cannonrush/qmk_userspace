@@ -70,7 +70,7 @@ bool process_oneshot_or_double_tap(uint16_t keycode, keyrecord_t *record) {
             tap_code(state->mod);
             tap_code(state->mod);
 
-            // Prevetn further processing
+            // Prevent further processing
             return false;
         }
     }

@@ -31,26 +31,26 @@ enum layers {
 #define MT_R LGUI_T(KC_R)
 #define MT_T LSFT_T(KC_T)
 #define MT_S LCTL_T(KC_S)
-#define MT_SPC LALT_T(KC_SPC)
-#define MT_BSPC RALT_T(KC_BSPC)
+#define MT_TAB LALT_T(KC_TAB)
+#define MT_ENT RALT_T(KC_ENT)
 #define MT_H RCTL_T(KC_H)
 #define MT_A RSFT_T(KC_A)
 #define MT_E RGUI_T(KC_E)
 
 // Layer-toggle keys
 #define LT_FNC LT(LAYER_FNC, KC_X)
-#define LT_NAV LT(LAYER_NAV, KC_TAB)
-#define LT_SYM LT(LAYER_SYM, KC_ENT)
+#define LT_NAV LT(LAYER_NAV, KC_SPC)
+#define LT_SYM LT(LAYER_SYM, KC_BSPC)
 
 #define MOD_MASK_LCAG (MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LGUI))
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_BASE] = LAYOUT(
         KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,
-        KC_TAB,   KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_QUOT,  KC_EQL,
-        KC_ESC,   KC_N,     MT_R,     MT_T,     MT_S,     KC_G,             KC_P,     MT_H,     MT_A,     MT_E,     KC_I,     KC_ENT,
+        KC_ESC,   KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_QUOT,  KC_EQL,
+        OS_LSFT,  KC_N,     MT_R,     MT_T,     MT_S,     KC_G,             KC_P,     MT_H,     MT_A,     MT_E,     KC_I,     OS_RSFT,
         OS_LSFT,  LT_FNC,   KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_COMM,  KC_DOT,   KC_SLSH,  OS_RSFT,
-                                                LT_NAV,   MT_SPC,           MT_BSPC,  LT_SYM
+                                                MT_TAB,   LT_NAV,           LT_SYM,   MT_ENT
     ),
     // [1] = LAYOUT(
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
@@ -71,14 +71,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  _______,  KC_LCBR,  KC_RCBR,  _______,  _______,          _______,  _______,  _______,  _______,  KC_DQT,   KC_PLUS,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  OS_RCTL,  OS_RSFT,  OS_RGUI,  OS_RALT,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  KC_LABK,  KC_RABK,  KC_QUES,  _______,
-                                                _______,  _______,          _______,  XXXXXXX
+                                                _______,  _______,          XXXXXXX,  _______
     ),
     [LAYER_NAV] = LAYOUT(
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
         _______,  OS_LALT,  OS_LGUI,  OS_LSFT,  OS_LCTL,  _______,          KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
-                                                XXXXXXX,  _______,          KC_SPC,   _______
+                                                _______,  XXXXXXX,          _______,  _______
     ),
     [LAYER_FNC] = LAYOUT(
         EE_CLR,   _______,  _______,  _______,  _______,  QK_RBT,           RM_NEXT,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,
@@ -122,7 +122,7 @@ const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
           '*',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      'R',
           '*',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      '*',
           '*',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      '*',
-                                                  '*',      '*',              '*',      '*'
+                                                  'L',      '*',              '*',      'R'
     );
 
 static uint16_t key_press_keycode = KC_NO;
@@ -139,37 +139,31 @@ bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
 // https://docs.qmk.fm/tap_hold#hold-on-other-key-press
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LT_NAV:
-            // Allow quick Tab -> Enter presses, but activate the layer otherwise
-            return key_press_keycode != LT_SYM && key_press_keycode != KC_ENT;
-        case LT_SYM:
-            // Always prioritize the layer activation
-            return true;
         case MT_R:
         case MT_S:
-        case MT_SPC:
+        case MT_TAB:
             // For snappier word and line deletion, resolve relevant modifiers
             // to "hold" immediately when backspace is pressed
-            return key_press_keycode == MT_BSPC;
+            return key_press_keycode == LT_SYM;
         default:
             return false;
     }
 }
 
-static bool override_mt_bspc = false;
+static bool override_lt_sym = false;
 
 // https://docs.qmk.fm/tap_hold#tapping-term
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case MT_BSPC:
+        case LT_SYM:
             if ((get_mods() & MOD_MASK_LCAG) != 0) {
-                // If modifiers are held, bypass mod-tap behavior.
+                // If modifiers are held, bypass tap-hold behavior.
                 //
                 // Here, we first clear the tapping term so that the key press is
                 // resolved immediatly and passed on for further processing. This
                 // will result in the "hold" action being selected, which needs
                 // to be overriden to "tap" later.
-                override_mt_bspc = true;
+                override_lt_sym = true;
                 return 0;
             }
         default:
@@ -180,15 +174,15 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 // https://docs.qmk.fm/custom_quantum_functions#process-record-function-documentation
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case MT_BSPC:
-            if (override_mt_bspc) {
+        case LT_SYM:
+            if (override_lt_sym) {
                 // We were forced to select the "hold" action to skip tapping term,
-                // now undo this and emit the "tap" as intended
-                uint8_t keycode = get_tap_keycode(MT_BSPC);
+                // now undo this and emit a "tap" as intended
+                uint8_t keycode = get_tap_keycode(LT_SYM);
                 if (record->event.pressed) {
                     register_code(keycode);
                 } else {
-                    override_mt_bspc = false;
+                    override_lt_sym = false;
                     unregister_code(keycode);
                 }
                 return false;
@@ -209,8 +203,9 @@ bool is_flow_tap_key(uint16_t keycode) {
     }
     switch (get_tap_keycode(keycode)) {
         case KC_1 ... KC_0:
-        case KC_B ... KC_S: // Exclude LSFT ("A")
-        case KC_U ... KC_Z: // Exclude RSFT ("T")
+        case KC_A ... KC_Z:
+        // case KC_B ... KC_S: // Exclude LSFT ("A")
+        // case KC_U ... KC_Z: // Exclude RSFT ("T")
         case KC_DOT:
         case KC_COMM:
         case KC_QUOT:
@@ -218,7 +213,7 @@ bool is_flow_tap_key(uint16_t keycode) {
         case KC_GRV:
         case KC_MINS:
         case KC_EQL:
-        case KC_SPC:
+        // case KC_SPC:
             return true;
     }
     return false;
