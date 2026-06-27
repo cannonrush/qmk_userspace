@@ -1,5 +1,4 @@
 #include QMK_KEYBOARD_H
-#include "one-shot-double-tap.c" // Include support for one-shot mod double-taps
 
 /**
  * Do next:
@@ -21,36 +20,36 @@
  */
 
 enum layers {
-    LAYER_BASE,
+    LAYER_BSE,
     LAYER_SYM,
     LAYER_NAV,
     LAYER_FNC,
 };
 
-// Mod-tap keys
-#define MT_R LGUI_T(KC_R)
-#define MT_T LSFT_T(KC_T)
-#define MT_S LCTL_T(KC_S)
-#define MT_TAB LALT_T(KC_TAB)
-#define MT_ENT RALT_T(KC_ENT)
-#define MT_H RCTL_T(KC_H)
-#define MT_A RSFT_T(KC_A)
-#define MT_E RGUI_T(KC_E)
+#define EX_FNC MO(LAYER_FNC)
 
-// Layer-toggle keys
-#define LT_FNC LT(LAYER_FNC, KC_X)
-#define LT_NAV LT(LAYER_NAV, KC_SPC)
-#define LT_SYM LT(LAYER_SYM, KC_BSPC)
+#define EX_E LALT_T(KC_E)
+#define EX_A LGUI_T(KC_A)
+#define EX_C LCTL_T(KC_C)
+#define EX_ENT LT(LAYER_NAV, KC_ENT)
+#define EX_SPC LSFT_T(KC_SPC)
 
-#define MOD_MASK_LCAG (MOD_BIT(KC_LCTL) | MOD_BIT(KC_LALT) | MOD_BIT(KC_LGUI))
+#define EX_SFT OS_RSFT
+#define EX_TAB LT(LAYER_SYM, KC_TAB)
+#define EX_J RCTL_T(KC_J)
+#define EX_K RGUI_T(KC_K)
+#define EX_L RALT_T(KC_L)
+
+// #include "magic.c"
+// #define MAGIC QK_ALT_REPEAT_KEY // or QK_AREP
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [LAYER_BASE] = LAYOUT(
+    [LAYER_BSE] = LAYOUT(
         KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,             KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,
-        KC_ESC,   KC_B,     KC_L,     KC_D,     KC_C,     KC_V,             KC_J,     KC_Y,     KC_O,     KC_U,     KC_QUOT,  KC_EQL,
-        OS_LSFT,  KC_N,     MT_R,     MT_T,     MT_S,     KC_G,             KC_P,     MT_H,     MT_A,     MT_E,     KC_I,     OS_RSFT,
-        OS_LSFT,  LT_FNC,   KC_Q,     KC_M,     KC_W,     KC_Z,             KC_K,     KC_F,     KC_COMM,  KC_DOT,   KC_SLSH,  OS_RSFT,
-                                                MT_TAB,   LT_NAV,           LT_SYM,   MT_ENT
+        _______,  KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,             KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_SCLN,
+        KC_ESC,   KC_A,     KC_S,     KC_D,     KC_F,     KC_G,             KC_H,     KC_J,     KC_K,     KC_L,     KC_BSPC,  KC_QUOT,
+        EX_FNC,   KC_DOT,   KC_Z,     KC_X,     KC_C,     KC_V,             KC_B,     KC_N,     KC_M,     KC_COMM,  KC_SLSH,  _______,
+                                                EX_ENT,   KC_SPC,           OS_RSFT,  EX_TAB
     ),
     // [1] = LAYOUT(
     //     _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
@@ -69,14 +68,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [LAYER_SYM] = LAYOUT(
         KC_TILD,  KC_EXLM,  KC_AT,    KC_HASH,  KC_DLR,   KC_PERC,          KC_CIRC,  KC_AMPR,  KC_ASTR,  KC_LPRN,  KC_RPRN,  KC_UNDS,
         _______,  _______,  KC_LCBR,  KC_RCBR,  _______,  _______,          _______,  _______,  _______,  _______,  KC_DQT,   KC_PLUS,
-        _______,  _______,  _______,  _______,  _______,  _______,          _______,  OS_RCTL,  OS_RSFT,  OS_RGUI,  OS_RALT,  _______,
+        _______,  _______,  _______,  _______,  _______,  _______,          _______,  KC_RALT,  KC_RCTL,  KC_RGUI,  KC_RSFT,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  KC_LABK,  KC_RABK,  KC_QUES,  _______,
                                                 _______,  _______,          XXXXXXX,  _______
     ),
     [LAYER_NAV] = LAYOUT(
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
-        _______,  OS_LALT,  OS_LGUI,  OS_LSFT,  OS_LCTL,  _______,          KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,
+        _______,  KC_LSFT,  KC_LGUI,  KC_LCTL,  KC_LALT,  _______,          KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,
         _______,  _______,  _______,  _______,  _______,  _______,          _______,  _______,  _______,  _______,  _______,  _______,
                                                 _______,  XXXXXXX,          _______,  _______
     ),
@@ -116,105 +115,65 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 // https://docs.qmk.fm/tap_hold#chordal-hold-handedness
-const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM =
-    LAYOUT(
-          'L',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      'R',
-          '*',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      'R',
-          '*',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      '*',
-          '*',      'L',      'L',      'L',      'L',      'L',              'R',      'R',      'R',      'R',      'R',      '*',
-                                                  'L',      '*',              '*',      'R'
-    );
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT(
+    '*', '*', '*', '*', '*', '*',   '*', '*', '*', '*', '*', '*',
+    '*', 'L', 'L', 'L', 'L', 'L',   'R', 'R', 'R', 'R', 'R', '*',
+    '*', 'L', 'L', 'L', 'L', 'L',   'R', 'R', 'R', 'R', 'R', '*',
+    '*', 'L', 'L', 'L', 'L', 'L',   'R', 'R', 'R', 'R', 'R', '*',
+                        '*', '*',   '*', '*'
+);
 
-static uint16_t key_press_keycode = KC_NO;
+// Keycodes store modifiers in a compact 5bit format;
+// extract and expand them into a full 8bit mask
+// https://github.com/qmk/qmk_firmware/blob/master/quantum/modifiers.h
+#define QK_MOD_TAP_GET_MOD_BITS(kc) (((kc) & 0x0F00) >> ((kc) & 0x1000) ? 4 : 8)
 
-// https://docs.qmk.fm/understanding_qmk
+static uint16_t last_pressed_keycode = KC_NO;
+
+// https://docs.qmk.fm/understanding_qmk#process-record
 bool pre_process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
-        // Keep track of the last pressed key so we can modify the "hold" decision
-        key_press_keycode = keycode;
+        last_pressed_keycode = keycode;
     }
+    // Process the record normally
     return true;
+
 }
 
 // https://docs.qmk.fm/tap_hold#hold-on-other-key-press
 bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case MT_R:
-        case MT_S:
-        case MT_TAB:
-            // For snappier word and line deletion, resolve relevant modifiers
-            // to "hold" immediately when backspace is pressed
-            return key_press_keycode == LT_SYM;
-        default:
-            return false;
-    }
-}
-
-static bool override_lt_sym = false;
-
-// https://docs.qmk.fm/tap_hold#tapping-term
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LT_SYM:
-            if ((get_mods() & MOD_MASK_LCAG) != 0) {
-                // If modifiers are held, bypass tap-hold behavior.
-                //
-                // Here, we first clear the tapping term so that the key press is
-                // resolved immediatly and passed on for further processing. This
-                // will result in the "hold" action being selected, which needs
-                // to be overriden to "tap" later.
-                override_lt_sym = true;
-                return 0;
-            }
-        default:
-            return TAPPING_TERM;
-    }
-}
-
-// https://docs.qmk.fm/custom_quantum_functions#process-record-function-documentation
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case LT_SYM:
-            if (override_lt_sym) {
-                // We were forced to select the "hold" action to skip tapping term,
-                // now undo this and emit a "tap" as intended
-                uint8_t keycode = get_tap_keycode(LT_SYM);
-                if (record->event.pressed) {
-                    register_code(keycode);
-                } else {
-                    override_lt_sym = false;
-                    unregister_code(keycode);
-                }
-                return false;
-            }
-            return true;
-        case OS_LCTL ... OS_RGUI:
-            // Support double-tapping one-shot mods, to produce a mod double-tap
-            return process_oneshot_or_double_tap(keycode, record);
-        default:
+        case EX_E:
+        case EX_A:
+        case EX_C:
+        case EX_J:
+        case EX_K:
+        case EX_L:
+            return get_tap_keycode(last_pressed_keycode) == KC_BSPC;
+        case EX_ENT:
+        case EX_TAB:
             return true;
     }
+    return false;
 }
 
 // https://docs.qmk.fm/tap_hold#is-flow-tap-key
 bool is_flow_tap_key(uint16_t keycode) {
-    if ((get_mods() & MOD_MASK_CAG) != 0) {
-        return false; // Disable Flow Tap on hotkeys
-    }
-    switch (get_tap_keycode(keycode)) {
-        case KC_1 ... KC_0:
-        case KC_A ... KC_Z:
-        // case KC_B ... KC_S: // Exclude LSFT ("A")
-        // case KC_U ... KC_Z: // Exclude RSFT ("T")
-        case KC_DOT:
-        case KC_COMM:
-        case KC_QUOT:
-        case KC_SLSH:
-        case KC_GRV:
-        case KC_MINS:
-        case KC_EQL:
-        // case KC_SPC:
-            return true;
+    if ((get_mods() & MOD_MASK_CAG) == 0) {
+        switch (get_tap_keycode(keycode)) {
+            case KC_1 ... KC_0:
+            case KC_A ... KC_Z:
+            case KC_DOT:
+            case KC_COMM:
+            case KC_QUOT:
+            case KC_SLSH:
+            case KC_GRV:
+            case KC_MINS:
+            case KC_EQL:
+            case KC_SPC:
+            case KC_BSPC:
+                return true;
+        }
     }
     return false;
 }
@@ -230,3 +189,18 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+// https://docs.qmk.fm/features/repeat_key#defining-alternate-keys
+// uint16_t get_alt_repeat_key_keycode_user(uint16_t keycode, uint8_t mods) {
+//     return get_alt_repeat_key_keycode_magic(keycode);
+// }
+
+// https://docs.qmk.fm/features/repeat_key#ignoring-certain-keys-and-mods
+// bool remember_last_key_user(uint16_t keycode, keyrecord_t* record, uint8_t* mods) {
+//     remember_last_key_magic();
+//     return true;
+// }
+
+// https://docs.qmk.fm/custom_quantum_functions#keyboard-housekeeping
+// void housekeeping_task_user(void) {
+//     housekeeping_task_magic();
+// }
